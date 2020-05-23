@@ -29,7 +29,6 @@
                 <th>Type</th>
                 <th>Breed</th>
                 <th>Age</th>
-                <th>Actions</th>
             </thead>
             <tbody>
                 @foreach ($owner->pets as $pet)
@@ -38,31 +37,24 @@
                     <td>{{$pet['type']}}</td>
                     <td>{{$pet['breed']}}</td>
                     <td>{{$pet['age']}}</td>
-                    <td>
-                        <form class="d-inline-block" action="{{route('pets.destroy', $pet['id'])}}" method="post">
-                            @method('DELETE') @csrf
-                            <input class="btn btn-outline-danger" type="submit" value="Remove pet" />
-                        </form>
-                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <form class="d-inline-block" action="{{route('clients.show.pet', $owner['id'])}}" method="post">
-            @csrf
-            <input type="hidden" name="addPet">
-            <input class="btn btn-outline-primary" type="submit" value="Add pet" />
+        <form action="{{route('clients.update', $owner['id'])}}" method="post">
+            @method('PUT') @csrf
+            <div class="form-group">
+                <label for="name">Client name</label>
+                <input type="text" class="form-control" name="name" id="name" value="{{$owner->name}}">
+            </div>
+            <div class="form-group">
+                <label for="surname">Client surname</label>
+                <input type="text" class="form-control" name="surname" id="surname" value="{{$owner->surname}}">
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Save</button>
         </form>
-        <form class="d-inline-block" action="{{route('clients.show.update', $owner['id'])}}" method="post">
-            @csrf
-            <input type="hidden" name="updateClient">
-            <input class="btn btn-outline-primary" type="submit" value="Edit client info" />
-        </form>
-        <form class="d-inline-block" action="{{route('clients.destroy', $owner['id'])}}" method="post">
-            @method('DELETE') @csrf
-            <input class="btn btn-outline-danger" type="submit" value="Delete" />
-        </form>
+
     </div>
 </div>
 

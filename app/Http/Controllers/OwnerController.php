@@ -11,9 +11,14 @@ class OwnerController extends Controller
         return view('clients', ['owners' => \App\Owner::all()]);
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
-        return view('client', ['owner' => \App\Owner::find($id)]);
+        if (isset($request['addPet'])) {
+            return view('newPet', ['owner' => \App\Owner::find($id)]);
+        } elseif (isset($request['updateClient'])) {
+            return view('updateClient', ['owner' => \App\Owner::find($id)]);
+        } else
+            return view('client', ['owner' => \App\Owner::find($id)]);
     }
 
     public function store(Request $request)
@@ -27,13 +32,28 @@ class OwnerController extends Controller
         $newOwner->name = $request['name'];
         $newOwner->surname = $request['surname'];
         return ($newOwner->save() !== 1) ?
-            redirect('/My_first_Laravel_project/clients')->with('status_success', 'New client created!') :
-            redirect('/My_first_Laravel_project/clients')->with('status_error', 'New client was not created!');
+            redirect('/Demo_Laravel_project/clients')->with('status_success', 'New client created!') :
+            redirect('/Demo_Laravel_project/clients')->with('status_error', 'New client was not created!');
+    }
+
+    public function update($id, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'surname' => 'required'
+        ]);
+
+        $updatedOwner = \App\Owner::find($id);
+        $updatedOwner->name = $request['name'];
+        $updatedOwner->surname = $request['surname'];
+        return ($updatedOwner->save() !== 1) ?
+            redirect('/Demo_Laravel_project/clients/'. $id)->with('status_success', 'Client info updated!') :
+            redirect('/Demo_Laravel_project/clients/'. $id)->with('status_error', 'Client info was not updated!');
     }
 
     public function destroy($id)
     {
         \App\Owner::destroy($id);
-        return redirect('/My_first_Laravel_project/clients')->with('status_success', 'Client deleted!');
+        return redirect('/Demo_Laravel_project/clients')->with('status_success', 'Client deleted!');
     }
 }

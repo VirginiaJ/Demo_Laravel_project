@@ -34,15 +34,15 @@
         @foreach ($owners as $owner)
         <tr>
             <td class="align-middle">{{$owner->name}} {{$owner->surname}}</td>
-            <td class="align-middle">@foreach ($owner->pets as $pet) {{$pet['type']}} {{$pet['name']}} @endforeach</td>
-            <td class="w-25">
+            <td class="align-middle">@foreach ($owner->pets as $pet) {{$pet['type']}} {{$pet['name']}} <br>@endforeach</td>
+            <td class="w-25 align-middle">
                 <form class="d-inline-block" action="{{route('clients.show', $owner['id'])}}" method="get">
                     @csrf
                     <input class="btn btn-outline-primary" type="submit" value="More details" />
                 </form>
                 <form class="d-inline-block" action="{{route('clients.destroy', $owner['id'])}}" method="post">
                     @method('DELETE') @csrf
-                    <input class="btn btn-outline-danger" type="submit" value="delete" />
+                    <input class="btn btn-outline-danger" type="submit" value="Delete" />
                 </form>
             </td>
         </tr>
