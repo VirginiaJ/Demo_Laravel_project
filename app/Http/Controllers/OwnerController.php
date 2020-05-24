@@ -25,13 +25,25 @@ class OwnerController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'surname' => 'required'
+            'surname' => 'required',
+            'petName' => 'required',
+            'type' => 'required',
+            'breed' => 'required',
+            'age' => 'required'
         ]);
 
-        $newOwner = new \App\Owner();
-        $newOwner->name = $request['name'];
-        $newOwner->surname = $request['surname'];
-        return ($newOwner->save() !== 1) ?
+        $newClient = new \App\Owner();
+        $newClient->name = $request['name'];
+        $newClient->surname = $request['surname'];
+        $newClient->save();
+        $newOwner = \App\Owner::find($newClient['id']);
+        $newPet = new \App\Pet();
+        $newPet->name = $request['petName'];
+        $newPet->type = $request['type'];
+        $newPet->breed = $request['breed'];
+        $newPet->age = $request['age'];
+        $newPet->owner_id = $newOwner->id;
+        return ($newPet->save() !== 1) ?
             redirect()->route('clients.index')->with('status_success', 'New client created!') :
             redirect()->route('clients.index')->with('status_error', 'New client was not created!');
     }
