@@ -8,7 +8,7 @@ class OwnerController extends Controller
 {
     public function index()
     {
-        return view('clients', ['owners' => \App\Owner::all()]);
+        return view('clients', ['owners' => \App\Owner::orderBy('surname')->get()]);
     }
 
     public function show($id, Request $request)
@@ -32,8 +32,8 @@ class OwnerController extends Controller
         $newOwner->name = $request['name'];
         $newOwner->surname = $request['surname'];
         return ($newOwner->save() !== 1) ?
-            redirect('/Demo_Laravel_project/clients')->with('status_success', 'New client created!') :
-            redirect('/Demo_Laravel_project/clients')->with('status_error', 'New client was not created!');
+            redirect()->route('clients.index')->with('status_success', 'New client created!') :
+            redirect()->route('clients.index')->with('status_error', 'New client was not created!');
     }
 
     public function update($id, Request $request)
@@ -47,13 +47,13 @@ class OwnerController extends Controller
         $updatedOwner->name = $request['name'];
         $updatedOwner->surname = $request['surname'];
         return ($updatedOwner->save() !== 1) ?
-            redirect('/Demo_Laravel_project/clients/'. $id)->with('status_success', 'Client info updated!') :
-            redirect('/Demo_Laravel_project/clients/'. $id)->with('status_error', 'Client info was not updated!');
+            redirect()->route('clients.show', $id)->with('status_success', 'Client info updated!') :
+            redirect()->route('clients.show', $id)->with('status_error', 'Client info was not updated!');
     }
 
     public function destroy($id)
     {
         \App\Owner::destroy($id);
-        return redirect('/Demo_Laravel_project/clients')->with('status_success', 'Client deleted!');
+        return redirect()->route('clients.index')->with('status_success', 'Client deleted!');
     }
 }

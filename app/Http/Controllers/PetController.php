@@ -22,14 +22,14 @@ class PetController extends Controller
         $newPet->age = $request['age'];
         $newPet->owner_id = $request['owner'];
         return ($newPet->save() !== 1) ?
-            redirect('/Demo_Laravel_project/clients/'. $request['owner'])->with('status_success', 'New pet was added!') :
-            redirect('/Demo_Laravel_project/clients/'. $request['owner'])->with('status_error', 'New pet was not added!');
+            redirect()->route('clients.show', $request['owner'])->with('status_success', 'New pet was added!') :
+            redirect()->route('clients.show', $request['owner'])->with('status_error', 'New pet was not added!');
     }
 
     public function destroy($id)
     {
         $pet = \App\Pet::find($id);
         \App\Pet::destroy($id);
-        return redirect('/Demo_Laravel_project/clients/'. $pet->owner_id)->with('status_success', 'Pet removed!');
+        return redirect()->route('clients.show', $pet->owner_id)->with('status_success', 'Pet removed!');
     }
 }
