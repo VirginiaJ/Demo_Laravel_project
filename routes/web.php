@@ -32,4 +32,22 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/pets', 'PetController@store')->name('pets.store');
     Route::delete('/pets/{id}', 'PetController@destroy')->name('pets.destroy');
+
+    Route::get('/new_doctor', function () {
+        return view('newDoctor');
+    })->name('newDoctor');
+    Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
+    Route::post('/doctors', 'DoctorController@store')->name('doctors.store');
+    Route::delete('/doctors/{id}', 'DoctorController@destroy')->name('doctors.destroy');
+    Route::put('/doctors/{id}', 'DoctorController@update')->name('doctors.update');
+    Route::get('/doctors/{id}', 'DoctorController@show')->name('doctors.show');
+
+    Route::get('/new_appointment', function () {
+        return view('newAppointment');
+    })->name('newAppointment');
+    Route::get('/appointments', 'AppointmentController@index')->name('appointments.index');
+    Route::post('/appointments', 'AppointmentController@store')->name('appointments.store');
+    Route::delete('/appointments/{id}', 'AppointmentController@destroy')->name('appointments.destroy');
+    Route::get('/appointments/{id}', 'AppointmentController@show')->name('appointments.show');
+    Route::put('/appointments/{id}', 'AppointmentController@update')->name('appointments.update');
 });
