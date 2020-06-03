@@ -10,15 +10,10 @@
 
     <title>Vet-Clinic</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -49,16 +44,20 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li>
-                            <a class="nav-link active" href="{{route('home')}}">Home</a>
+                            <a class="nav-link {{ Route::is('home') ? 'active' : '' }}"
+                                href="{{route('home')}}">Home</a>
                         </li>
                         <li>
-                            <a class="nav-link mr-auto" href="{{route('clients.index')}}">Clients</a>
+                            <a class="nav-link {{ Route::is('clients.index') ? 'active' : '' }}"
+                                href="{{route('clients.index')}}">Clients</a>
                         </li>
                         <li>
-                            <a class="nav-link mr-auto" href="{{route('doctors.index')}}">Doctors</a>
+                            <a class="nav-link {{ Route::is('doctors.index') ? 'active' : '' }}"
+                                href="{{route('doctors.index')}}">Doctors</a>
                         </li>
                         <li>
-                            <a class="nav-link mr-auto" href="{{route('appointments.index')}}">Appointments</a>
+                            <a class="nav-link {{ Route::is('appointments.index') ? 'active' : '' }}"
+                                href="{{route('appointments.index')}}">Appointments</a>
                         </li>
                     </ul>
 

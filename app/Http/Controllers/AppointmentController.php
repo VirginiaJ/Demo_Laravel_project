@@ -17,6 +17,8 @@ class AppointmentController extends Controller
             $firstday = date('Y-m-d', strtotime("this week")) . " 00:00:00";
             $lastday = date('Y-m-d', strtotime("this week +6 days")) . " 23:59:59";
             return view('appointments', ['appointments' => \App\Appointment::whereBetween('date_time', [$firstday, $lastday])->orderby('date_time')->get()]);
+        } elseif (isset($request['doctor_id'])) {
+            return view('appointments', ['appointments' => \App\Appointment::where('doctor_id', $request['doctor_id'])->orderby('date_time')->get()]);
         } else
             return view('appointments', ['appointments' => \App\Appointment::orderby('date_time')->get()]);
     }
